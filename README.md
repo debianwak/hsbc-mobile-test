@@ -1,4 +1,4 @@
-# hsbc-mobile-test
+# x-mobile-test
 Author: Juan Tapia
 
 Steps to run application web
