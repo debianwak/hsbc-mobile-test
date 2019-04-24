@@ -3,7 +3,7 @@ Author: Juan Tapia
 
 Steps to run application web
 
-1. git clone https://github.com/debianwak/hsbc-mobile-test.git
+1. git clone https://github.com/debianwak/x-mobile-test.git
 2. cd hsbc-mobile-test
 3. mvn clean install
 4. mvn spring-boot:run
