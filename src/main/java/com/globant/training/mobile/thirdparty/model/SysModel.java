@@ -1,4 +1,4 @@
-package com.globant.hsbc.training.mobile.thirdparty.model;
+package com.globant.training.mobile.thirdparty.model;
 
 public class SysModel {
 

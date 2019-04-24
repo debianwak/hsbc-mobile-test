@@ -8,11 +8,11 @@
 		<version>1.5.20.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.globant.hsbc.training</groupId>
+	<groupId>com.globant.training</groupId>
 	<artifactId>mobile-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>payment</name>
-	<description>HCBC test API example</description>
+	<description>Some test API example</description>
 
 	<properties>
 		<java.version>1.8</java.version>

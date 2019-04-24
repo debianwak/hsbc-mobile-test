@@ -1,8 +1,8 @@
-package com.globant.hsbc.training.mobile.converter;
+package com.globant.training.mobile.converter;
 
-import com.globant.hsbc.training.mobile.builder.GenericBuilder;
-import com.globant.hsbc.training.mobile.model.WeatherResponse;
-import com.globant.hsbc.training.mobile.thirdparty.model.WeatherAPIModel;
+import com.globant.training.mobile.builder.GenericBuilder;
+import com.globant.training.mobile.model.WeatherResponse;
+import com.globant.training.mobile.thirdparty.model.WeatherAPIModel;
 import org.springframework.stereotype.Component;
 
 @Component

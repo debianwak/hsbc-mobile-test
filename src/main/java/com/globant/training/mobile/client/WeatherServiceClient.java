@@ -1,6 +1,6 @@
-package com.globant.hsbc.training.mobile.client;
+package com.globant.training.mobile.client;
 
-import com.globant.hsbc.training.mobile.thirdparty.model.WeatherAPIModel;
+import com.globant.training.mobile.thirdparty.model.WeatherAPIModel;
 import com.google.gson.Gson;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;

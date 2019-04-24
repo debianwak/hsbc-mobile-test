@@ -1,4 +1,4 @@
-package com.globant.hsbc.training.mobile;
+package com.globant.training.mobile;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

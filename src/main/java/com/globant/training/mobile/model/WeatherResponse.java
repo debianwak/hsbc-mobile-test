@@ -1,4 +1,4 @@
-package com.globant.hsbc.training.mobile.model;
+package com.globant.training.mobile.model;
 
 public class WeatherResponse {
     

@@ -1,9 +1,9 @@
-package com.globant.hsbc.training.mobile.controller;
+package com.globant.training.mobile.controller;
 
-import com.globant.hsbc.training.mobile.converter.WeatherConverter;
-import com.globant.hsbc.training.mobile.client.WeatherServiceClient;
-import com.globant.hsbc.training.mobile.model.WeatherResponse;
-import com.globant.hsbc.training.mobile.thirdparty.model.WeatherAPIModel;
+import com.globant.training.mobile.converter.WeatherConverter;
+import com.globant.training.mobile.client.WeatherServiceClient;
+import com.globant.training.mobile.model.WeatherResponse;
+import com.globant.training.mobile.thirdparty.model.WeatherAPIModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

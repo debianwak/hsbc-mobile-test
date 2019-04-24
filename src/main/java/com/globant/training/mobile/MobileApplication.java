@@ -1,4 +1,4 @@
-package com.globant.hsbc.training.mobile;
+package com.globant.training.mobile;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

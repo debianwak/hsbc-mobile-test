@@ -1,4 +1,4 @@
-package com.globant.hsbc.training.mobile.controller;
+package com.globant.training.mobile.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

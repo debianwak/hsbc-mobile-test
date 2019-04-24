@@ -1,4 +1,4 @@
-package com.globant.hsbc.training.mobile.builder;
+package com.globant.training.mobile.builder;
 
 import java.util.ArrayList;
 import java.util.List;
