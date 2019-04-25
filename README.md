@@ -9,6 +9,3 @@ Steps to run application web
 4. mvn spring-boot:run
 5. open in browser url: http://localhost:8080/
 6. test it
-
-
-Note: you must have an internet conection because there is a jquery internet library reference
