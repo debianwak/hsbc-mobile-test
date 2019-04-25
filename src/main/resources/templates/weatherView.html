@@ -10,42 +10,6 @@
     <script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
     
     
-    <script type="text/javascript">
-      function getWeatherInfo(idCity)
-      {
-        $.ajax({
-          url: "http://localhost:8080/api/weather/info/city/" + idCity,
-          
-          success: function( result ) {
-            $( "#weather-info" ).html("");
-            
-            $( "#weather-info" ).append('<div class="well">');
-            $( "#weather-info" ).append('<div class="row">');
-            $( "#weather-info" ).append('<span class="label label-default">Date: ' + result.todayDate + "</span>");
-            $( "#weather-info" ).append("</div>");
-             $( "#weather-info" ).append('<div class="row">');
-            $( "#weather-info" ).append('<span class="label label-default">City: ' + result.cityName + "</span>");
-            $( "#weather-info" ).append("</div>");
-             $( "#weather-info" ).append('<div class="row">');
-            $( "#weather-info" ).append('<span class="label label-default">Weather: ' + result.descWeather + "</span>");
-            $( "#weather-info" ).append("</div>");
-             $( "#weather-info" ).append('<div class="row">');
-            $( "#weather-info" ).append('<span class="label label-default">Temperature Farenheit: ' + result.tempFarenheit + "</span>");
-            $( "#weather-info" ).append("</div>");
-             $( "#weather-info" ).append('<div class="row">');
-            $( "#weather-info" ).append('<span class="label label-default">Temperature Celcius: ' + result.tempCelcius + "</span>");
-            $( "#weather-info" ).append("</div>");
-             $( "#weather-info" ).append('<div class="row">');
-            $( "#weather-info" ).append('<span class="label label-default">Sunrise: ' + result.sunrise + "</span>");
-            $( "#weather-info" ).append("</div>");
-             $( "#weather-info" ).append('<div class="row">');
-            $( "#weather-info" ).append('<span class="label label-default">Sunset: ' + result.sunset + "</span>");
-            $( "#weather-info" ).append("</div>");
-            $( "#weather-info" ).append("</div>");
-          }
-        });
-      }
-    </script>
     <title>Hello Weather Demo</title>
   </head>
   <body>
@@ -59,27 +23,65 @@
     <div class="row">
       <div class="col-sm-4"></div>
       <div class="col-sm-4">
+       
+       <form action="#" th:action="@{/weatherCityInfo}" method="post">
         <div class="form-group">
           <label for="cities"> Select a City:</label>
-          <select id="cities" class="form-control">
-            <option value="2643743" selected="selected">London</option>
-            <option value="1819729">Hong Kong</option>
+          <select id="cities" class="form-control" name="idCity">
+            <option value="2643743" th:selected="${selectedOption == 2643743} ? 'selected'" >London</option>
+            <option value="1819729" th:selected="${selectedOption == 1819729} ? 'selected'">Hong Kong</option>
           </select>
         </div>
         <div class="row">
-          <button onclick="getWeatherInfo($('#cities').val())" class="btn-primary">Get Weather</button>
+          <button type="submit" class="btn-primary">Get Weather</button>
         </div>
+        
+       </form>
+       
       </div>
     </div>
     
     
     <!-- result -->
-    <div class="row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-4">
-        <div id="weather-info"></div>
+    <div id = "info-result" th:if="${showResult}">
+      <!-- result -->
+      <div class="row">
+    
+        <div class="col-sm-4"></div>
+    
+        <div class="col-sm-4">
+          <div id="weather-info">
+        
+            <div class="row">
+              <span class="label label-default" th:text="'Date: ' + ${date}"></span>
+            </div>
+            <div class="row">
+              <span class="label label-default"  th:text="'City: ' + ${cityName}"></span>
+            </div>
+            <div class="row">
+              <span class="label label-default" th:text="'Weather: ' + ${weather}"></span>
+            </div>
+            <div class="row">
+              <span class="label label-default" th:text="'Temperature Farenheit: ' + ${tempFarenheit}"></span>
+            </div>
+            <div class="row">
+              <span class="label label-default" th:text="'Temperature Celcius: ' + ${tempCelcius}"></span>
+            </div>
+            <div class="row">
+              <span class="label label-default" th:text="'Sunrise: ' + ${sunrise}"></span>
+            </div>
+            <div class="row">
+              <span class="label label-default" th:text="'Sunset: ' + ${sunset}"></span>
+            </div>
+      
+          </div>
+        </div>
       </div>
+      
     </div>
+    
+    
+    
     
   </div>
   </body>
