@@ -1,43 +1,82 @@
+<!doctype html>
 <html xmlns:th="http://www.springframework.org/schema/mvc">
-<head>
-  <title>Hello Weather Demo</title>
-  
-  <script th:src="@{/static/js/jquery-3.4.0.min.js}"></script>
-  
-    <script type="text/javascript">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     
-    function getWeatherInfo(idCity)
-    {
-      $.ajax({
-        url: "http://localhost:8080/api/weather/info/city/" + idCity,
-        
-        success: function( result ) {
-          $( "#weather-info" ).html( "");
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}" />
+    
+    <script type="text/javascript" th:src="@{/static/js/jquery-3.4.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
+    
+    
+    <script type="text/javascript">
+      function getWeatherInfo(idCity)
+      {
+        $.ajax({
+          url: "http://localhost:8080/api/weather/info/city/" + idCity,
           
-          $( "#weather-info" ).append("<div>Date: " + result.todayDate + "</div>");
-          $( "#weather-info" ).append("<div>City: " + result.cityName + "</div>");
-          $( "#weather-info" ).append("<div>Weather: " + result.descWeather + "</div>");
-          $( "#weather-info" ).append("<div>Temperature Farenheit: " + result.tempFarenheit + "</div>");
-          $( "#weather-info" ).append("<div>Temperature Celcius: " + result.tempCelcius + "</div>");
-          $( "#weather-info" ).append("<div>Sunrise: " + result.sunrise + "</div>");
-          $( "#weather-info" ).append("<div>Sunset: " + result.sunset + "</div>");
-        }
-      });
-    }
-  </script>
-</head>
+          success: function( result ) {
+            $( "#weather-info" ).html("");
+            
+            $( "#weather-info" ).append('<div class="well">');
+            $( "#weather-info" ).append('<div class="row">');
+            $( "#weather-info" ).append('<span class="label label-default">Date: ' + result.todayDate + "</span>");
+            $( "#weather-info" ).append("</div>");
+             $( "#weather-info" ).append('<div class="row">');
+            $( "#weather-info" ).append('<span class="label label-default">City: ' + result.cityName + "</span>");
+            $( "#weather-info" ).append("</div>");
+             $( "#weather-info" ).append('<div class="row">');
+            $( "#weather-info" ).append('<span class="label label-default">Weather: ' + result.descWeather + "</span>");
+            $( "#weather-info" ).append("</div>");
+             $( "#weather-info" ).append('<div class="row">');
+            $( "#weather-info" ).append('<span class="label label-default">Temperature Farenheit: ' + result.tempFarenheit + "</span>");
+            $( "#weather-info" ).append("</div>");
+             $( "#weather-info" ).append('<div class="row">');
+            $( "#weather-info" ).append('<span class="label label-default">Temperature Celcius: ' + result.tempCelcius + "</span>");
+            $( "#weather-info" ).append("</div>");
+             $( "#weather-info" ).append('<div class="row">');
+            $( "#weather-info" ).append('<span class="label label-default">Sunrise: ' + result.sunrise + "</span>");
+            $( "#weather-info" ).append("</div>");
+             $( "#weather-info" ).append('<div class="row">');
+            $( "#weather-info" ).append('<span class="label label-default">Sunset: ' + result.sunset + "</span>");
+            $( "#weather-info" ).append("</div>");
+            $( "#weather-info" ).append("</div>");
+          }
+        });
+      }
+    </script>
+    <title>Hello Weather Demo</title>
+  </head>
   <body>
-  <div>
-    <span>Select a City:</span>
-    <select id="cities">
-      <option value="2643743" selected="selected">London</option>
-      <option value="1819729">Hong Kong</option>
-    </select>
+  <div class="container-fluid">
+    
+    <!-- input -->
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <div class="row">
+          <span>Select a City:</span>
+          <select id="cities">
+            <option value="2643743" selected="selected">London</option>
+            <option value="1819729">Hong Kong</option>
+          </select>
+        </div>
+        <div class="row">
+          <button onclick="getWeatherInfo($('#cities').val())" class="btn-primary">Get Weather</button>
+        </div>
+      </div>
+    
+    </div>
+    
+    <!-- result -->
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <div id="weather-info"></div>
+      </div>
+    </div>
+    
   </div>
-  <div>
-    <button onclick="getWeatherInfo($('#cities').val())">Get Weather</button>
-  </div>
-  
-  <div id="weather-info"></div>
   </body>
 </html>
