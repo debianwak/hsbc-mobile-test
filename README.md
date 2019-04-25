@@ -15,7 +15,7 @@ Steps to run application web from Master branch:
     5. open app web in browser url: http://localhost:8080/
     6. test it
 
-Steps to run application web from Master branch:
+Steps to run application web from feature/app-weather-without-ajax-calls branch:
 
     1. git clone https://github.com/debianwak/x-mobile-test.git
     2. cd x-mobile-test
