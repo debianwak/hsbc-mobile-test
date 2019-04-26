@@ -11,5 +11,4 @@ public class SetupBeans {
     public Gson gson() {
         return new Gson();
     }
-    
 }

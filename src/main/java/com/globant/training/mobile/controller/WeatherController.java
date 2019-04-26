@@ -1,9 +1,10 @@
 package com.globant.training.mobile.controller;
 
-import com.globant.training.mobile.client.WeatherServiceClient;
-import com.globant.training.mobile.converter.WeatherConverter;
+import com.globant.training.mobile.converter.WeatherModelConverter;
 import com.globant.training.mobile.model.WeatherResponse;
-import com.globant.training.mobile.thirdparty.model.WeatherAPIModel;
+import com.globant.training.mobile.service.WeatherService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,39 +17,57 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class WeatherController {
+    Logger logger = LoggerFactory.getLogger(WeatherController.class);
     
     @Inject
-    private WeatherServiceClient weatherServiceClient;
+    private WeatherService weatherService;
     
     @Inject
-    private WeatherConverter weatherConverter;
+    private WeatherModelConverter weatherConverter;
     
-    private static long DEFAULT_CITY = 2643743;
+    private static final long DEFAULT_CITY = 2643743;
+    private static final String DATE_PARAMETER = "date";
+    private static final String CITY_NAME_PARAMETER = "cityName";
+    private static final String WEATHER_PARAMETER = "weather";
+    private static final String FAHRENHEIT_PARAMETER = "tempFahrenheit";
+    private static final String CELSIUS_PARAMETER = "tempCelsius";
+    private static final String SUNRISE_PARAMETER = "sunrise";
+    private static final String SUNSET_PARAMETER = "sunset";
+    private static final String SELECTED_OPTION = "selectedOption";
+    private static final String SHOW_RESULT = "showResult";
+    private static final String WEATHER_VIEW = "weatherView";
+    private static final String ERROR_VIEW = "errorView";
+    private static final String ERROR = "error";
     
     @RequestMapping("/")
     public String getWeatherView(Model model) {
-        model.addAttribute("showResult", false);
-        model.addAttribute("selectedOption", DEFAULT_CITY);
-        return "weatherView";
+        model.addAttribute(SHOW_RESULT, false);
+        model.addAttribute(SELECTED_OPTION, DEFAULT_CITY);
+        return WEATHER_VIEW;
     }
     
     @PostMapping("/weatherCityInfo")
-    public String addUser(@RequestParam("idCity") long idCity, Model model, HttpSession session, HttpServletRequest request) throws Exception {
-    
-        WeatherAPIModel apiResponse = weatherServiceClient.getWeatherByCity(idCity);
-        WeatherResponse responseModel = weatherConverter.weatherApiModelToResponseModel(apiResponse);
+    public String postWeatherParameters(@RequestParam("idCity") long idCity,
+                                        Model model, HttpSession session, HttpServletRequest request) throws Exception {
         
-        model.addAttribute("date", responseModel.getTodayDate());
-        model.addAttribute("cityName", responseModel.getCityName());
-        model.addAttribute("weather", responseModel.getDescWeather());
-        model.addAttribute("tempFarenheit", responseModel.getTempFarenheit());
-        model.addAttribute("tempCelcius", responseModel.getTempCelcius());
-        model.addAttribute("sunrise", responseModel.getSunrise());
-        model.addAttribute("sunset", responseModel.getSunset());
+        try {
+            WeatherResponse responseModel = weatherService.getWeatherByCity(idCity);
     
-        model.addAttribute("selectedOption", idCity);
-        model.addAttribute("showResult", true);
-        
-        return "weatherView";
+            model.addAttribute(DATE_PARAMETER, responseModel.getTodayDate());
+            model.addAttribute(CITY_NAME_PARAMETER, responseModel.getCityName());
+            model.addAttribute(WEATHER_PARAMETER, responseModel.getDescWeather());
+            model.addAttribute(FAHRENHEIT_PARAMETER, responseModel.getTempFahrenheit());
+            model.addAttribute(CELSIUS_PARAMETER, responseModel.getTempCelsius());
+            model.addAttribute(SUNRISE_PARAMETER, responseModel.getSunrise());
+            model.addAttribute(SUNSET_PARAMETER, responseModel.getSunset());
+    
+            model.addAttribute(SELECTED_OPTION, idCity);
+            model.addAttribute(SHOW_RESULT, true);
+        } catch(Exception ex) {
+            logger.error("something happening wrong", ex);
+            model.addAttribute(ERROR, ex.getMessage());
+            return ERROR_VIEW;
+        }
+        return WEATHER_VIEW;
     }
 }
