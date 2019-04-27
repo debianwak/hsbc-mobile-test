@@ -1,6 +1,7 @@
 package com.globant.training.mobile.controller;
 
 import com.globant.training.mobile.converter.WeatherModelConverter;
+import com.globant.training.mobile.exception.WeatherException;
 import com.globant.training.mobile.model.WeatherResponse;
 import com.globant.training.mobile.service.WeatherService;
 import org.slf4j.Logger;
@@ -63,7 +64,7 @@ public class WeatherController {
     
             model.addAttribute(SELECTED_OPTION, idCity);
             model.addAttribute(SHOW_RESULT, true);
-        } catch(Exception ex) {
+        } catch(WeatherException ex) {
             logger.error("something happening wrong", ex);
             model.addAttribute(ERROR, ex.getMessage());
             return ERROR_VIEW;
