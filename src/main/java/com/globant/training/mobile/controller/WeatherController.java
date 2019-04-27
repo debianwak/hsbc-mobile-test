@@ -48,7 +48,7 @@ public class WeatherController {
     
     @PostMapping("/weatherCityInfo")
     public String postWeatherParameters(@RequestParam("idCity") long idCity,
-                                        Model model, HttpSession session, HttpServletRequest request) throws Exception {
+                                        Model model, HttpSession session, HttpServletRequest request) {
         
         try {
             WeatherResponse responseModel = weatherService.getWeatherByCity(idCity);

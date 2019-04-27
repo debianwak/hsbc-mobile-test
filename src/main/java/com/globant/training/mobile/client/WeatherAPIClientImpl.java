@@ -30,7 +30,7 @@ public class WeatherAPIClientImpl implements  WeatherAPIClient {
     private static final String WEATHER_PARAM_APP_ID = "APPID";
     
     
-    public WeatherAPIModel getWeatherByCity(long idCity) throws Exception {
+    public WeatherAPIModel getWeatherByCity(long idCity) throws WeatherException {
     
         HttpResponse<JsonNode> response;
         try {
