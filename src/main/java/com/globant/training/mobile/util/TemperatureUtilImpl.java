@@ -3,15 +3,15 @@ package com.globant.training.mobile.util;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TemeratureUtilImpl implements TemeratureUtil {
+public class TemperatureUtilImpl implements TemperatureUtil {
     
     @Override
     public Double convertKevinToCelsius(float tempKevin) {
-        return Double.valueOf(tempKevin - 273.15F);
+        return (double) (tempKevin - 273.15F);
     }
     
     @Override
     public Double convertKevinToFahrenheit(float tempKevin) {
-        return Double.valueOf(((( tempKevin - 273) * 9/5) + 32));
+        return ((tempKevin - 273.15) * 9D / 5) + 32;
     }
 }

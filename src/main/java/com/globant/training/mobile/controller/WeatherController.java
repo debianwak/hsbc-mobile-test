@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +19,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class WeatherController {
-    Logger logger = LoggerFactory.getLogger(WeatherController.class);
+    private static final Logger logger = LoggerFactory.getLogger(WeatherController.class);
     
-    @Inject
     private WeatherService weatherService;
     
     @Inject
@@ -39,6 +39,12 @@ public class WeatherController {
     private static final String WEATHER_VIEW = "weatherView";
     private static final String ERROR_VIEW = "errorView";
     private static final String ERROR = "error";
+    
+    @Inject
+    public WeatherController(WeatherService weatherService) {
+        Assert.notNull(weatherService, "WeatherService must not be null!");
+        this.weatherService = weatherService;
+    }
     
     @RequestMapping("/")
     public String getWeatherView(Model model) {

@@ -1,11 +1,8 @@
 package com.globant.training.mobile.controller;
 
-import com.globant.training.mobile.client.WeatherAPIClient;
-import com.globant.training.mobile.converter.WeatherModelConverter;
 import com.globant.training.mobile.exception.WeatherException;
 import com.globant.training.mobile.model.WeatherResponse;
 import com.globant.training.mobile.service.WeatherService;
-import com.globant.training.mobile.thirdparty.model.WeatherAPIModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +16,8 @@ import org.springframework.ui.Model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class WeatherControllerTests {
@@ -31,14 +30,21 @@ public class WeatherControllerTests {
     
     private static final String EXPECTED_VIEW = "weatherView";
     private static final String ERROR_VIEW = "errorView";
+    private static final Long SOME_CITY_ID = 1445L;
     
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
     
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorException() {
+        /* construct */
+        WeatherController weatherController = new WeatherController(null);
+    }
+    
     @Test
-    public void testGetWeatherView() throws Exception {
+    public void testGetWeatherView() {
         /* run */
         Model model = new ExtendedModelMap();
         String view = weatherController.getWeatherView(model);
@@ -49,28 +55,31 @@ public class WeatherControllerTests {
     }
     
     @Test
-    public void testPostWeatherParameters() throws Exception {
+    public void testPostWeatherParameters() throws WeatherException {
         /* mock */
         when(weatherService.getWeatherByCity(anyLong())).thenReturn(new WeatherResponse());
         
         /* run */
-        String view = weatherController.postWeatherParameters(1999, new ExtendedModelMap(), new MockHttpSession(), new MockHttpServletRequest());
+        String view = weatherController.postWeatherParameters(SOME_CITY_ID, new ExtendedModelMap(), new MockHttpSession(), new MockHttpServletRequest());
     
         /* review */
         assertNotNull(view);
         assertEquals(EXPECTED_VIEW, view);
+        verify(weatherService, times(1)).getWeatherByCity(anyLong());
     }
     
     @Test
-    public void testPostWeatherParametersException() throws Exception {
+    public void testPostWeatherParametersException() throws WeatherException {
         /* mock */
         when(weatherService.getWeatherByCity(anyLong())).thenThrow(new WeatherException("a new exception"));
         
         /* run */
-        String view = weatherController.postWeatherParameters(1999, new ExtendedModelMap(), new MockHttpSession(), new MockHttpServletRequest());
+        String view = weatherController.postWeatherParameters(
+                    SOME_CITY_ID, new ExtendedModelMap(), new MockHttpSession(), new MockHttpServletRequest());
         
         /* review */
         assertNotNull(view);
         assertEquals(ERROR_VIEW, view);
+        verify(weatherService, times(1)).getWeatherByCity(anyLong());
     }
 }

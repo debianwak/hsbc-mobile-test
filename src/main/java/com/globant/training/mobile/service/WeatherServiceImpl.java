@@ -5,17 +5,23 @@ import com.globant.training.mobile.converter.WeatherModelConverter;
 import com.globant.training.mobile.exception.WeatherException;
 import com.globant.training.mobile.model.WeatherResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.inject.Inject;
 
 @Component
 public class WeatherServiceImpl implements WeatherService {
     
-    @Inject
     private WeatherAPIClient weatherAPIClient;
     
     @Inject
     private WeatherModelConverter weatherConverter;
+    
+    @Inject
+    public WeatherServiceImpl(WeatherAPIClient weatherAPIClient) {
+        Assert.notNull(weatherAPIClient, "weatherAPIClient must not be null!");
+        this.weatherAPIClient = weatherAPIClient;
+    }
     
     @Override
     public WeatherResponse getWeatherByCity(long idCity) throws WeatherException {

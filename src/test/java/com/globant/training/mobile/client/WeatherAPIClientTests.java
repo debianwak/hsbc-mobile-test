@@ -1,18 +1,14 @@
 package com.globant.training.mobile.client;
 
+import com.globant.training.mobile.exception.WeatherException;
 import com.globant.training.mobile.thirdparty.model.WeatherAPIModel;
 import com.google.gson.Gson;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import com.mashape.unirest.request.HttpRequest;
-import net.minidev.json.JSONObject;
-import org.apache.http.HttpResponseFactory;
-import org.apache.http.HttpVersion;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.DefaultHttpResponseFactory;
-import org.apache.http.message.BasicStatusLine;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,10 +22,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.http.HttpStatus;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.spy;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -40,11 +34,10 @@ public class WeatherAPIClientTests {
     @Mock
     private Gson gson;
     
-    @Mock
-    private Unirest unirest;
-    
     @InjectMocks
     private WeatherAPIClientImpl weatherAPIClient;
+    
+    private static final Long SOME_CITY_ID = 1445L;
     
     @Before
     public void setup() {
@@ -52,13 +45,13 @@ public class WeatherAPIClientTests {
     }
     
     @Test
-    public void testGetWeatherByCity() throws Exception {
+    public void testGetWeatherByCity() throws UnirestException, WeatherException {
+        /* mock */
         GetRequest request = mock(GetRequest.class);
         HttpRequest httpRequest = mock(HttpRequest.class);
         HttpResponse<JsonNode> mockResponse = mock(HttpResponse.class);
         JsonNode mockNode = mock(JsonNode.class);
         
-        /* mock */
         PowerMockito.mockStatic(Unirest.class);
         when(Unirest.get(anyString())).thenReturn(request);
         when(request.queryString(anyString(), anyLong())).thenReturn(httpRequest);
@@ -70,10 +63,25 @@ public class WeatherAPIClientTests {
         when(gson.fromJson(anyString(), Matchers.<Class<WeatherAPIModel>>any())).thenReturn(new WeatherAPIModel());
         
         /* run */
-        WeatherAPIModel apiModel = weatherAPIClient.getWeatherByCity(new Long(1445));
+        WeatherAPIModel apiModel = weatherAPIClient.getWeatherByCity(SOME_CITY_ID);
         
         /* review */
         assertNotNull(apiModel);
     }
     
+    @Test(expected = WeatherException.class)
+    public void testGetWeatherByCityUnirestException() throws UnirestException, WeatherException {
+        /* mock */
+        GetRequest request = mock(GetRequest.class);
+        HttpRequest httpRequest = mock(HttpRequest.class);
+        
+        PowerMockito.mockStatic(Unirest.class);
+        when(Unirest.get(anyString())).thenReturn(request);
+        when(request.queryString(anyString(), anyLong())).thenReturn(httpRequest);
+        when(httpRequest.queryString(anyString(), anyString())).thenReturn(httpRequest);
+        when(httpRequest.asJson()).thenThrow(new UnirestException("new UnirestException"));
+    
+        /* run */
+        weatherAPIClient.getWeatherByCity(SOME_CITY_ID);
+    }
 }
