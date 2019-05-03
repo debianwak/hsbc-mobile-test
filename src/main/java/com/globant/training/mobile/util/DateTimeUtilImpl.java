@@ -10,7 +10,6 @@ import java.util.Date;
 @Component
 public class DateTimeUtilImpl implements DateTimeUtil {
     
-    
     private SimpleDateFormat simpleDateFormat;
     
     @Inject
