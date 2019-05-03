@@ -4,8 +4,8 @@ public class WeatherResponse {
     
     private String cityName;
     private String descWeather;
-    private float tempFahrenheit;
-    private float tempCelsius;
+    private Double tempFahrenheit;
+    private Double tempCelsius;
     private String sunrise;
     private String sunset;
     private String todayDate;
@@ -26,19 +26,19 @@ public class WeatherResponse {
         this.descWeather = descWeather;
     }
     
-    public float getTempFahrenheit() {
+    public Double getTempFahrenheit() {
         return tempFahrenheit;
     }
     
-    public void setTempFahrenheit(float tempFahrenheit) {
+    public void setTempFahrenheit(Double tempFahrenheit) {
         this.tempFahrenheit = tempFahrenheit;
     }
     
-    public float getTempCelsius() {
+    public Double getTempCelsius() {
         return tempCelsius;
     }
     
-    public void setTempCelsius(float tempCelsius) {
+    public void setTempCelsius(Double tempCelsius) {
         this.tempCelsius = tempCelsius;
     }
     

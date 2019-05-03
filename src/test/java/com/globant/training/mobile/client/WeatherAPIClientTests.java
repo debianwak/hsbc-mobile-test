@@ -68,6 +68,7 @@ public class WeatherAPIClientTests {
         when(mockResponse.getBody()).thenReturn(mockNode);
         
         when(gson.fromJson(anyString(), Matchers.<Class<WeatherAPIModel>>any())).thenReturn(new WeatherAPIModel());
+        
         /* run */
         WeatherAPIModel apiModel = weatherAPIClient.getWeatherByCity(new Long(1445));
         
